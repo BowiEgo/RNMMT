@@ -11,6 +11,7 @@ export default class extends Component {
   render() {
     return(
       <View style={ styles.followContainer }>
+        <Text>{ this.props.name }</Text>
         <Image 
           style={ styles.followCancelBtn }
           source={require('../assets/img/butuisong.png')}
