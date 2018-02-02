@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import {
-  Platform,
+  ListView,
   StyleSheet,
   Text,
   View
 } from 'react-native'
+
+import Follow from '../components/Follow'
 
 import { createIconSet } from 'react-native-vector-icons'
 const glyphMap = { 'icon-shezhi': 59037 }
 const GJIcon = createIconSet(glyphMap, 'iconfont')
 
 export default class extends Component {
-
   static navigationOptions = ({ navigation }) => {
     const { navigate } = navigation
     return {
@@ -23,25 +24,43 @@ export default class extends Component {
       headerRight: (<GJIcon
                       style={styles.btnGoSettings}
                       name="icon-shezhi" 
-                      size={35} 
+                      size={26} 
                       color="#fff" 
-                      onPress={() => navigate('Settings')}/>)
+                      onPress={() => navigate('Settings')}
+                    />)
+    }
+  }
+  
+  constructor() {
+    super()
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    this.state = {
+      dataSource: ds.cloneWithRows(['1', '2', '3', '4', '5']),
     }
   }
 
   render() {
     return(
       <View style={ styles.momentsContainer }>
-        <Text onPress={() => this.props.navigation.navigate('Settings')}>Moments</Text>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => <Follow/>}
+        />
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  momentsContainer: {},
+  momentsContainer: {
+    padding: 10,
+    backgroundColor: '#CDDBF0'
+  },
   btnGoSettings: {
-    borderRadius: 0.6,
+    padding: 4,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: '#fff',
     backgroundColor: '#2196f3'
   }
 })
